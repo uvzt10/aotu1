@@ -1,0 +1,7 @@
+fastapi
+uvicorn
+moviepy==1.0.3
+edge-tts
+requests
+aiofiles
+imageio==2.4.1
