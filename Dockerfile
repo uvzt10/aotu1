@@ -6,10 +6,12 @@ RUN apt-get update && apt-get install -y \
     ffmpeg \
     imagemagick \
     ghostscript \
+    findutils \
     && rm -rf /var/lib/apt/lists/*
 
-# تعديل صلاحيات ImageMagick للسماح بالكتابة على الفيديو (خطوة ضرورية جداً في اللينكس)
-RUN sed -i '/<policy domain="path" rights="none" pattern="@\*"/d' /etc/ImageMagick-6/policy.xml
+# === الخطوة المصححة ===
+# بدلاً من تحديد المسار يدوياً، نستخدم الأمر find للبحث عن ملف policy.xml وتعديله أينما كان
+RUN find /etc -name "policy.xml" -exec sed -i '/<policy domain="path" rights="none" pattern="@\*"/d' {} +
 
 # إعداد مجلد العمل
 WORKDIR /app
